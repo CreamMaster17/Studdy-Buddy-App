@@ -1,5 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import mixins, viewsets
+from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
@@ -106,3 +106,69 @@ class NoteViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.Gener
         serializer.save(owner=self.request.user)
 
     # TODO: retrieve, update, destroy, rich text/markdown, tagging, linking to ContentItem
+class StudyToolsViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def get_text(self, request):
+        text = request.data.get("text", "")
+
+        if not isinstance(text, str) or not text.strip():
+            return None, Response(
+                {"error": "A non-empty text field is required."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        return text.strip(), None
+
+    @action(detail=False, methods=["post"])
+    def summarize(self, request):
+        text, error_response = self.get_text(request)
+
+        if error_response:
+            return error_response
+
+        try:
+            summary = summarize_notes(text)
+            return Response({"summary": summary})
+        except Exception as error:
+            return Response(
+                {"error": str(error)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+    @action(detail=False, methods=["post"])
+    def flashcards(self, request):
+        text, error_response = self.get_text(request)
+
+        if error_response:
+            return error_response
+
+        try:
+            flashcards = generate_flashcards(text)
+            return Response({"flashcards": flashcards})
+        except Exception as error:
+            return Response(
+                {"error": str(error)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+    @action(detail=False, methods=["post"])
+    def quiz(self, request):
+        text, error_response = self.get_text(request)
+
+        if error_response:
+            return error_response
+
+        try:
+            quiz = generate_quiz(text)
+            return Response({"quiz": quiz})
+        except ValueError as error:
+            return Response(
+                {"error": str(error)},
+                status=status.HTTP_502_BAD_GATEWAY,
+            )
+        except Exception as error:
+            return Response(
+                {"error": str(error)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
