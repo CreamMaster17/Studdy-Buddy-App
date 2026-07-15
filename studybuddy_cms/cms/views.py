@@ -4,6 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework import status
 
 from .models import Assessment, AssessmentAttempt, ContentItem, Note, Subject
 from .serializers import (
@@ -13,7 +14,11 @@ from .serializers import (
     NoteSerializer,
     SubjectSerializer,
 )
-
+from .services.gemini_service import (
+    generate_flashcards,
+    generate_quiz,
+    summarize_notes,
+)
 #student improvement measurement. "on track is defined as avg score > lookback attempts meeting assessment passing score"
 def is_on_track(assessment, lookback=3):
     
