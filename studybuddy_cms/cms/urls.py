@@ -11,6 +11,11 @@ router.register("content", views.ContentItemViewSet, basename="content")
 router.register("assessments", views.AssessmentViewSet, basename="assessment")
 router.register("attempts", views.AssessmentAttemptViewSet, basename="attempt")
 router.register("notes", views.NoteViewSet, basename="note")
+router.register(
+    "study-tools",
+    views.StudyToolsViewSet,
+    basename="study-tools",
+)
 
 urlpatterns = [
     path("", include(router.urls)),
