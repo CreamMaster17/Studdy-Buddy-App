@@ -2,34 +2,57 @@
 ## Setup Instruction
 1. **Clone this repository/branch**
 
-2. **Create a virtual environment**
+    Make sure you are using the latest version of Python: `Python 3.14.6`. Check using `python --version`
+   
+    <br>
+    
+3. **Create a virtual environment**
 
-    `python -m venv venv`
 
-    `venv\Scripts\activate`
+   In VSCode `ctrl+shift+p -> python: select interpreter -> Create Virtual Environment`
+   
+    <br>
+   
+   alternatively, run the following in a terminal to manually set up the virtual environment:
 
-3. **Install dependencies**
+   `Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned` | Allows scripts to run
+
+    `python -m venv venv` | Creates Virtual Environment named venv
+
+    `venv\Scripts\activate` | Activates the Virtual Environment
+
+   <br>
+
+5. **Install dependencies**
     
     `pip install -r requirements.txt`
-
-4. **Apply database migrations**
+   
+    <br>
+    
+6. **Apply database migrations**
     
     Navigate inside the config folder (config/config): 
     `cd config`
 
     Then run the migrate command to generate the sqlite3 file: 
     `python manage.py migrate`
-
-5. **Run the server**
+   
+    <br>
+    
+7. **Run the server**
     
     `python manage.py runserver`
 
     Open the application at
     http://127.0.0.1:8000/
 
-6. **Test Insert data**
+    Nothing should show or you should get an error as this is the root and there isn't anything set up for it
+   
+    <br>
     
-    go to http://127.0.0.1:8000/Test_Insert/
+8. **Test Insert data**
+    
+    Go to http://127.0.0.1:8000/Test_Insert/
 
     This will insert 2 test user data. Navigate to 
     config/studybuddy_cms/pages/views.py
@@ -39,15 +62,20 @@
     |--------|--------|
     |`Bruhdy`|`letmeinplease`|
     |`Donny`|`Passingword`|
-
-7. **Login**
+   
+    <br>
     
-    go to http://127.0.0.1:8000/login/
+9. **Login**
+    
+    Go to http://127.0.0.1:8000/login/
 
     This will allow you to enter the login information
     to access the account and enter the main page.
     More pages will be added throughout the week.
-
+   
+    <br>
+    
+<hr>
 
 ## Project Structure
 ```
