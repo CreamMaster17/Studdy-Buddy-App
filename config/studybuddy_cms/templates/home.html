@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyBuddy!</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+
+    <navbar>
+        <ul>
+            <li></li>
+        </ul>
+    </navbar>
+
+    <header>
+
+        <!-- Basic Titling -->
+        <section id="title">
+            <h1>Study Buddy</h1>
+        </section>
+    
+        <!-- Basic Description -->
+        <div class="desc">
+            <p>
+                StudyBuddy is your perfect AI study tool assistant! It will take your notes and lectures and make notes out of it!
+            </p>
+        </div>
+    </header>
+
+
+    <section id="input">
+
+        <div class="input-box">
+                
+            <!-- Textare that gets typed user input -->
+            <textarea id="textbox" rows="2" placeholder="Input your notes here"></textarea> 
+
+            <div class="button-stack">
+
+                <button id="submit-button">Submit</button>
+
+                <!-- Gets user file upload (Input is ugly so button ftw) -->
+                <!-- NOTE: THIS IS ONLY CAPTURES THE INPUT. NOTHING IS DONE WITH IT AS OF YET -->
+                <button onclick="document.getElementById('file-uploader').click()">Upload File</button>
+                <input type="file" id="file-uploader" name="file-uploader">
+
+            </div>
+        </div>
+    </section>
+
+    <section id="output">
+        <!-- Empty for future use -->
+        <div id="output">
+                    
+        </div>
+    </section>
+
+
+    <!-- Make box look pretty --> 
+    <script src="{% static 'js/home.js' %}" defer></script>
+
+
+    <form action="{% url 'studybuddy_cms:logout' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,61 @@
+#title h1 {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.desc p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 200px;
+}
+
+.input-box{
+
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+}
+
+.input-box textarea{
+    flex: 1;
+    width: 85%;
+    min-width: 300px;
+    max-width: 80%;
+    resize: none;
+    padding: 5px;
+    field-sizing: content;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-radius: 15px;
+    
+}
+
+.button-stack {
+
+    display: flex;
+    flex-direction: column;
+    height: 70px;
+    gap: 8px;
+}
+
+.button-stack button {
+    height: 30px;
+    padding: 0 16px;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.button-stack input {
+    display: none;
+    height: 30px;
+    padding: 0 16px;
+    cursor: pointer;
+    border-radius: 15px;
+}
