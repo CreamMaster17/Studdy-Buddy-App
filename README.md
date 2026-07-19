@@ -1,6 +1,6 @@
 
 ## Setup Instruction
-1. **Clone the repository**
+1. **Clone this repository/branch**
 
 2. **Create a virtual environment**
 
