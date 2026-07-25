@@ -6,7 +6,7 @@
    
     <br>
     
-3. **Create a virtual environment**
+3. **Create a virtual environment (OPTIONAL)**
 
 
    In VSCode `ctrl+shift+p -> python: select interpreter -> Create Virtual Environment`
@@ -58,10 +58,10 @@
     config/studybuddy_cms/pages/views.py
     to add/change test users (under test_insert function)
 
-    |Username|Password|
-    |--------|--------|
-    |`Bruhdy`|`letmeinplease`|
-    |`Donny`|`Passingword`|
+    |Username|Email|Password|
+    |--------|--------|--------|
+    |`Bruhdy`|`Bruhdy@email.com`|`letmeinplease`|
+    |`Donny`|`Donny@email.com`|`Passingword`|
    
     <br>
     
@@ -80,6 +80,64 @@
 ## Project Structure
 ```
 └── 📁config
+    └── 📁apps
+        └── 📁accounts
+            └── 📁migrations
+                ├── __init__.py
+                ├── 0001_initial.py
+            └── 📁templates
+                ├── home.html
+                ├── login.html
+                ├── registration.html
+                ├── Test_Insert.html
+            ├── __init__.py
+            ├── apps.py
+            ├── backends.py
+            ├── forms.py
+            ├── models.py
+            ├── signals.py
+            ├── tests.py
+            ├── urls.py
+            ├── views.py
+        └── 📁studybuddy_cms
+            └── 📁management
+                └── 📁commands
+                    ├── __init__.py
+                    ├── check_due_assessments.py
+                ├── __init__.py
+            └── 📁migrations
+                ├── __init__.py
+                ├── 0001_initial.py
+            └── 📁services
+                ├── __init__.py
+                ├── assessment_services.py
+                ├── geminiservice.py
+            ├── __init__.py
+            ├── admin.py
+            ├── apps.py
+            ├── models.py
+            ├── serializers.py
+            ├── SETTINGS_SNIPPET.py
+            ├── urls.py
+            ├── views.py
+        └── 📁studybuddy_quiz
+            └── 📁migrations
+                ├── __init__.py
+                ├── 0001_initial.py
+            └── 📁Test Quizes
+                ├── test_quizes.py
+            ├── admin.py
+            ├── apps.py
+            ├── db_schema_quiz.sql
+            ├── models.py
+            ├── quiz_generator.py
+            ├── quiz_history.py
+            ├── study_recommendations.py
+            ├── study_stats.py
+            ├── tests.py
+            ├── urls.py
+            ├── views.py
+        ├── __init__.py
     └── 📁config
         ├── __init__.py
         ├── asgi.py
@@ -90,45 +148,11 @@
         └── 📁css
             ├── home.css
             ├── registration.css
+        └── 📁images
+            ├── SB_logo.png
         └── 📁js
             ├── home.js
-    └── 📁studybuddy_cms
-        └── 📁management
-            └── 📁commands
-                ├── __init__.py
-                ├── check_due_assessments.py
-            ├── __init__.py
-        └── 📁migrations
-            ├── __init__.py
-            ├── 0001_initial.py
-        └── 📁pages
-            ├── urls.py
-            ├── views.py
-        └── 📁services
-            ├── __init__.py
-            ├── assessment_services.py
-            ├── geminiservice.py
-        └── 📁templates
-            ├── home.html
-            ├── login.html
-            ├── registration.html
-            ├── Test_Insert.html
-        ├── __init__.py
-        ├── admin.py
-        ├── apps.py
-        ├── models.py
-        ├── serializers.py
-        ├── SETTINGS_SNIPPET.py
-        ├── urls.py
-        ├── views.py
-    └── 📁studybuddy_quiz
-        └── 📁Test Quizes
-            ├── test_quizes.py
-        ├── db_schema_quiz.sql
-        ├── quiz_generator.py
-        ├── quiz_history.py
-        ├── study_recommendations.py
-        ├── study_stats.py
     └── manage.py
-└── requirements.txt
+└──README.md
+└──requirements.txt
 ```
