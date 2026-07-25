@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'rest_framework',
     'django_filters',
-    'studybuddy_cms'
+    'studybuddy_cms',
+    'studybuddy_quiz',  # Samuel Gamon — quiz history, stats, recommendations
 ]
 
 MIDDLEWARE = [
