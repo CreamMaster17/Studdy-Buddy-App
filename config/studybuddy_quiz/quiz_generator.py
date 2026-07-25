@@ -35,6 +35,8 @@ except ImportError:
 
 GEMINI_CLIENT = None
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+# New API keys can no longer use gemini-2.5-flash; default to a current Flash model.
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")
 if GEMINI_AVAILABLE and GEMINI_API_KEY:
     GEMINI_CLIENT = genai.Client(api_key=GEMINI_API_KEY)
 
@@ -86,7 +88,7 @@ def _call_gemini_api(prompt):
 
     try:
         response = GEMINI_CLIENT.models.generate_content(
-            model="gemini-2.5-flash",
+            model=GEMINI_MODEL,
             contents=prompt,
             config={
                 "temperature": 0.3,
