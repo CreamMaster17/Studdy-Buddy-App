@@ -7,7 +7,9 @@
 --   - Storing generated quiz snapshots
 --   - Supporting the statistics dashboard and AI recommendations
 --
--- Run this script against your PostgreSQL database to initialize the tables.
+-- NOTE (Sprint 5): The live project uses Django models in models.py
+-- (SQLite via manage.py migrate). This SQL remains the PostgreSQL
+-- reference schema for the same tables.
 
 -- ============================================
 -- Table: quiz_results
