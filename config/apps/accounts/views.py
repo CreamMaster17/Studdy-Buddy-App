@@ -1,16 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth import authenticate, login, logout, get_user_model, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from .models import UserProfile
 
 User = get_user_model()
-
-@login_required
-def home(request):
-    
-    return render(request, "home.html")
 
 def test_insert(request):
     try:
@@ -47,12 +42,9 @@ def login_page(request):
         if user is not None:
             login(request, user)
 
-            print("LOGIN SUCCESSFUL")
-            print("REDIRECTING TO HOME")
-
-            return redirect("accounts:home")
+            return redirect("studybuddy_cms:home")
         else:
-            return render(request, "login.html", {"error": "Invalid username or password"})
+            messages.error(request, f"Invalid username or password.")
 
     return render(request, "login.html")
 
@@ -78,3 +70,29 @@ def registration_page(request):
             messages.error(request, f"An account already exists with that username.")
         
     return render(request, "registration.html")
+
+@login_required
+def user_settings(request):
+
+    profile = request.user.profile
+    if request.method == "POST":
+        request.user.username = request.POST.get("username") or request.user.username
+        request.user.email = request.POST.get("email") or request.user.email
+        profile.nickname = request.POST.get("nickname") or profile.nickname
+
+        password = request.POST.get("password")
+        if password:
+            request.user.set_password(password)
+            update_session_auth_hash(request, request.user)
+
+        request.user.save()
+
+        if request.FILES.get("profile_picture"):
+            profile.profile_picture = request.FILES["profile_picture"]
+
+        profile.save()
+
+        return redirect("accounts:user-settings")
+
+
+    return render(request, "user-settings.html")

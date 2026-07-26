@@ -4,7 +4,8 @@ from rest_framework.decorators import action
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework import status
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 
 from .models import Assessment, AssessmentAttempt, ContentItem, Note, Subject
 
@@ -165,3 +166,10 @@ class StudyToolsViewSet(viewsets.ViewSet):
                 {"error": str(error)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
+
+
+
+@login_required
+def home(request):
+    
+    return render(request, "home.html")

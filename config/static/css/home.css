@@ -1,61 +1,338 @@
+/* -=-=- Title -=-=- */
+
 #title h1 {
 
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 15px;
+    font-size: 45px;
+    margin-bottom: 5px;
 }
 
+
+#title img {
+
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+
+}
+
+
+
 .desc p {
+
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin-bottom: 200px;
+    max-width: 700px;
+    margin: 10px auto 50px auto;
+    font-size: 20px;
+    color: #555;
+
 }
 
-.input-box{
 
-    display: flex;
-    align-items: flex-end;
-    gap: 8px;
-    width: 100%;
-    justify-content: center;
-    text-align: center;
-}
 
-.input-box textarea{
-    flex: 1;
-    width: 85%;
-    min-width: 300px;
-    max-width: 80%;
-    resize: none;
-    padding: 5px;
-    field-sizing: content;
-    overflow: hidden;
-    box-sizing: border-box;
-    border-radius: 15px;
-    
-}
+/* -=-=- Main Input Area -=-=- */
 
-.button-stack {
+.input-box {
 
     display: flex;
     flex-direction: column;
-    height: 70px;
-    gap: 8px;
+    align-items: center;
+    width: 90%;
+    max-width: 900px;
+    margin: auto;
+    padding: 30px;
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0px 8px 25px rgba(0,0,0,0.1);
+
 }
 
-.button-stack button {
-    height: 30px;
-    padding: 0 16px;
-    cursor: pointer;
+.input-box textarea {
+
+    width: 100%;
+    min-height: 150px;
+    resize: none;
+    padding: 15px;
+    box-sizing: border-box;
     border-radius: 15px;
+    border: 2px solid #ddd;
+    font-size: 16px;
+    font-family: inherit;
+    transition: border 0.2s ease;
+
 }
 
-.button-stack input {
+
+
+/* -=-=- Study Modes -=-=- */
+
+.study-options {
+
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+
+}
+
+.study-options button {
+
+    padding: 10px 18px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+}
+
+.study-options button:hover{
+
+    background: #eeeeee;
+    border-color: #eeeeee;
+
+}
+
+.study-options .active {
+
+    background: #eeeeee;
+    border-color: #eeeeee;
+
+}
+
+
+
+/* -=-=- Upload Area -=-=- */
+
+.upload-area {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+
+}
+
+.upload-area button {
+
+    height: 40px;
+    padding: 0 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: none;
+    background: #eeeeee;
+    transition: 0.2s ease;
+
+}
+
+.upload-area button:hover {
+
+    background: #b4b4b4;
+
+}
+
+.upload-area span {
+
+    color: #666;
+    font-size: 14px;
+
+}
+
+
+
+/* -=-=- Generate Button -=-=- */
+
+#submit-button {
+
+    width: 250px;
+    height: 45px;
+    border-radius: 25px;
+    border: none;
+    background: #8addf5;
+    font-size: 17px;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+}
+
+#submit-button:hover {
+
+    background: #396483;
+    color:white;
+    transition: 0.2s ease;
+
+}
+
+
+
+/* -=-=- AI Output -=-=- */
+
+#output {
+
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+
+}
+
+.ai-response {
+
+    width: 90%;
+    max-width: 900px;
+    background: white;
+    border-radius: 25px;
+    padding: 25px;
+    box-shadow: 0px 8px 25px rgba(0,0,0,0.1);
+
+}
+
+.ai-response h2 {
+
+    margin-top: 0;
+
+}
+
+#response-content {
+
+    background: #f9fafb;
+    padding: 20px;
+    border-radius: 15px;
+    min-height: 150px;
+    color: #444444;
+
+}
+
+
+
+/* -=-=- Navigation -=-=- */
+
+.top-nav {
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px 40px;
+
+}
+
+.profile-menu {
+
+    position: relative;
+
+}
+
+
+
+/* -=-=- Profile picture -=-=- */
+
+.profile-pic {
+
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid black;
+    transition: 0.2s ease;
+
+}
+
+
+
+/* -=-=- Dropdown -=-=- */
+
+.dropdown-content {
+
     display: none;
-    height: 30px;
-    padding: 0 16px;
-    cursor: pointer;
+    position: absolute;
+    right: 0;
+    margin-top: 10px;
+    width: 180px;
+    background: white;
+    border: 2px solid black;
     border-radius: 15px;
+    overflow: hidden;
+    text-align: center;
+
+}
+
+.dropdown-content.show {
+
+    display: block;
+
+}
+
+.dropdown-content a {
+
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    background: white;
+    border: none;
+    border-bottom: 1px solid #eeeeee;
+    border-top: 1px solid #eeeeee;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: inherit;
+    text-decoration: none;
+    color: black;
+    box-sizing: border-box;
+
+}
+
+.dropdown-content button {
+
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    background: white;
+    border: none;
+    border-bottom: 1px solid #eeeeee;
+    border-top: 1px solid #eeeeee;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: inherit;
+    text-decoration: none;
+    color: black;
+    box-sizing: border-box;
+
+}
+
+.dropdown-content a:hover {
+
+    background: #eeeeee;
+    transition: .2s ease;
+    border-bottom: 1px solid grey;
+    border-top: 1px solid grey;
+
+}
+
+.dropdown-content button:hover {
+
+    background: #eeeeee;
+    transition: .2s ease;
+    border-bottom: 1px solid grey;
+    border-top: 1px solid grey;
+
+}
+
+.dropdown-content form {
+
+    margin: 0;
+    padding: 0;
+
 }

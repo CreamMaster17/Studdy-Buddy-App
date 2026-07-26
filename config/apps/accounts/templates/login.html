@@ -11,41 +11,61 @@
 </head>
 <body>
 
-<div class="container">
-    <h2>Account Login</h2>
+    <!-- Main Body Container -->
+    <div class="container">
+        <h2>Account Login</h2>
 
-    <form action="{% url 'accounts:login' %}" method="POST">
+        <!-- Send Data to Login View -->
+        <form action="{% url 'accounts:login' %}" method="POST">
 
-        {% csrf_token %}
+            {% csrf_token %}
 
-        <label for="username">Username or Email</label>
-        <input
-            type="text"
-            id="username"
-            name="username"
-            required
-            minlength="3"
-            maxlength="50"
-        >
+            <!-- Username/Email -->
+            <form action="{% url 'accounts:login' %}" method="POST">
+            <label for="username">Username or Email</label>
+            <input
+                type="text"
+                id="username"
+                name="username"
+                required
+                minlength="3"
+                maxlength="50"
+            >
 
-        <label for="password">Password</label>
-        <input
-            type="password"
-            id="password"
-            name="password"
-            required
-            minlength="8"
-            maxlength="255"
-        >
+            <!-- Password -->
+            <label for="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                minlength="8"
+                maxlength="255"
+            >
 
-        <button type="submit">Login</button>
-    </form>
+            <!-- Submit Button -->
+            <button type="submit">Login</button>
+        </form>
 
-    <div class="login-link">
-        Don't have an account?
-        <a href="{% url 'accounts:registration' %}">Sign up</a>
+        <!-- Registration Login Link -->
+        <div class="login-link">
+            Don't have an account?
+            <a href="{% url 'accounts:registration' %}">Sign up</a>
+        </div>
     </div>
-</div>
+
+
+    <!-- Display Messages When Recieved -->
+    <!-- Both Success and Error Messages -->
+    {% if messages %}
+    <div class="message">
+        {% for message in messages %}
+            
+            {{ message }}
+            
+        {% endfor %}
+    </div>
+    {% endif %}
 
 </body>
 </html>

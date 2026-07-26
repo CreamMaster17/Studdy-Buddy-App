@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+
+    <title>Settings</title>
+
+    <link rel="stylesheet" href="{% static 'css/user-settings.css' %}">
+</head>
+<body>
+
+    <!-- Everything inside one big happy box -->
+    <section class="settings-box">
+
+        <h1>Account Settings</h1>
+
+         <!-- Necessary for image upload -->
+        <form method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <!-- User Profile Picture -->
+            <div class="profile-section">
+
+                <!-- Use exisitng pfp if not then default -->
+                <img
+                    src= 
+                    "{% if request.user.profile.profile_picture %}
+                        {{ request.user.profile.profile_picture.url }}
+                    {% else %}
+                        {% static 'images/EmptyProfilePic.jpg' %}
+                    {% endif %}"
+
+                class="profile-pic"
+                id="profile-pic-preview"
+                alt="Profile">
+
+                <input type="file" name="profile_picture" id="profile-pic-input">
+
+            </div>
+
+            <!-- User Nickname -->
+            <div class="settings-body">
+                <label>Nickname</label>
+                <input
+                    type="text"
+                    name="nickname"
+                    value="{{ request.user.profile.nickname }}"
+                    placeholder="Leave blank to keep current nickname">
+            </div>
+
+
+            <!-- Visual Separater  -->
+            <hr class="section-divider">
+
+
+            <!-- User Username -->
+            <div class="settings-body">
+                <label>Username</label>
+                <input
+                    type="text"
+                    name="username"
+                    value="{{ request.user.username }}">
+            </div>
+
+            <!-- User Email -->
+            <div class="settings-body">
+                <label>Email</label>
+                <input
+                    type="email"
+                    name="email"
+                    value="{{ request.user.email }}">
+            </div>
+
+            <!-- User password -->
+            <div class="settings-body">
+                <label>New Password</label>
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Leave blank to keep current password">
+            </div>
+
+            <!-- Display Buttons Side By Side -->
+            <div class="button-row">
+
+                <!-- Submit Form POST -->
+                <button type="submit">
+                    Save Changes
+                </button>
+                
+               <!-- Cancel and Go Back -->
+                <a href="{% url 'studybuddy_cms:home' %}">
+                    Cancel
+                </a>
+                
+            </div>
+
+        </form>
+
+    </section>
+
+    <!-- Used to make the PFP auto update the pfp preview -->
+    <!-- DOES NOT CHANGE UNTIL USER CLICKS "SAVE CHANGES" -->
+    <script>
+        const input = document.getElementById("profile-pic-input");
+        const preview = document.getElementById("profile-pic-preview");
+
+        input.addEventListener("change", function() {
+            const file = this.files[0];
+
+            if (file) {
+                preview.src = URL.createObjectURL(file);
+            }
+        });
+    </script>
+
+</body>
+</html>

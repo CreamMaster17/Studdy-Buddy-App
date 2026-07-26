@@ -1,0 +1,8 @@
+# This folder is for all profile pictures uploaded
+# by users, minus the default PFP icon
+
+# Ignore all files in this folder
+*
+
+# Except the gitignore itself
+!.gitignore

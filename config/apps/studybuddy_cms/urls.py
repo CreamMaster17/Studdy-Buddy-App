@@ -16,6 +16,9 @@ router.register(
 )
 
 urlpatterns = [
+
+    path("home/", views.home, name="home"),
+
     # API Routes
     path("api/", include(router.urls)),
 
