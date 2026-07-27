@@ -92,12 +92,12 @@ class AssessmentAttemptViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         return AssessmentAttempt.objects.filter(assessment__owner=self.request.user)
 
 
-# I will update with update/delete/detail retrieve later.
+
 class NoteViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
     serializer_class = NoteSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ["subject"]
+    filterset_fields = ["subject", "content_item", "pinned"]
 
     def get_queryset(self):
         return Note.objects.filter(owner=self.request.user)
