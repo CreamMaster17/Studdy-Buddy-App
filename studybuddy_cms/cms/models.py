@@ -100,13 +100,27 @@ class AssessmentAttempt(models.Model):
 class Note(models.Model):
     subject = models.ForeignKey(Subject, related_name="notes", on_delete=models.CASCADE)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    content_item = models.ForeignKey(
+        ContentItem, related_name="notes", on_delete=models.SET_NULL, blank=True, null=True
+    )
     body = models.TextField()
+    tags = models.CharField(max_length=255, blank=True, help_text="Comma-separated tags.")
+    pinned = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
 
     # TODO: content_item link, tags, updated_at, pinning, search indexing
 
     class Meta:
-        ordering = ["-created_at"]
+       ordering = ["-pinned", "-created_at"]
+        indexes = [
+            models.Index(fields=["subject", "owner"]),
+            models.Index(fields=["tags"]),
+        ]
 
+    def tag_list(self):
+        return [tag.strip() for tag in self.tags.split(",") if tag.strip()]
+    
     def __str__(self):
         return f"Note ({self.subject.name}, {self.created_at:%Y-%m-%d})"
