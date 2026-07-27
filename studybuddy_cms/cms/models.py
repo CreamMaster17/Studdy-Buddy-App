@@ -96,7 +96,7 @@ class AssessmentAttempt(models.Model):
         return f"{self.assessment.title}: {self.score}%"
 
 
-#not finished atm 
+
 class Note(models.Model):
     subject = models.ForeignKey(Subject, related_name="notes", on_delete=models.CASCADE)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -110,7 +110,7 @@ class Note(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-    # TODO: content_item link, tags, updated_at, pinning, search indexing
+    #content_item link, tags, updated_at, pinning, search indexing added
 
     class Meta:
        ordering = ["-pinned", "-created_at"]
