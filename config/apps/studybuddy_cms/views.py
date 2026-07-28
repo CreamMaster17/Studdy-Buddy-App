@@ -123,7 +123,7 @@ class StudyToolsViewSet(viewsets.ViewSet):
 
         try:
             summary = summarize_notes(text)
-            return Response({"summary": summary})
+            return Response(summary)
         except Exception as error:
             return Response(
                 {"error": str(error)},
@@ -139,7 +139,7 @@ class StudyToolsViewSet(viewsets.ViewSet):
 
         try:
             flashcards = generate_flashcards(text)
-            return Response({"flashcards": flashcards})
+            return Response(flashcards)
         except Exception as error:
             return Response(
                 {"error": str(error)},
@@ -155,7 +155,7 @@ class StudyToolsViewSet(viewsets.ViewSet):
 
         try:
             quiz = generate_quiz(text)
-            return Response({"quiz": quiz})
+            return Response(quiz)
         except ValueError as error:
             return Response(
                 {"error": str(error)},

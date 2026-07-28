@@ -110,7 +110,7 @@ class Note(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-    # TODO: content_item link, tags, updated_at, pinning, search indexing
+    # Content_item link, tags, updated_at, pinning, search indexing added
 
     class Meta:
         ordering = ["-pinned", "-created_at"]
