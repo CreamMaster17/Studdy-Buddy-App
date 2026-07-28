@@ -1,3 +1,6 @@
+
+#Run: python manage.py test apps.accounts
+
 from django.test import TestCase
 from django.contrib.auth import get_user_model, authenticate
 

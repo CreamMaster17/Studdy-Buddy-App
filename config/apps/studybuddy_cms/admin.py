@@ -30,5 +30,6 @@ class AssessmentAttemptAdmin(admin.ModelAdmin):
 
 @admin.register(Note)
 class NoteAdmin(admin.ModelAdmin):
-    list_display = ("subject", "owner", "created_at")
-    list_filter = ("subject",)
+    list_display = ("subject", "owner", "content_item", "pinned", "created_at", "updated_at")
+    list_filter = ("subject", "pinned")
+    search_fields = ("body", "tags")

@@ -4,11 +4,11 @@ from rest_framework.decorators import action
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework import status
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from .models import Assessment, AssessmentAttempt, ContentItem, Note, Subject
-
 from .serializers import (
     AssessmentAttemptSerializer,
     AssessmentSerializer,
@@ -16,12 +16,12 @@ from .serializers import (
     NoteSerializer,
     SubjectSerializer,
 )
-from .services.geminiservice import (
+from .services.gemini_service import (
     generate_flashcards,
     generate_quiz,
     summarize_notes,
 )
-
+from .services.assessment_services import is_on_track
 
 class SubjectViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Subject.objects.all()
@@ -86,12 +86,12 @@ class AssessmentAttemptViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin,
         return AssessmentAttempt.objects.filter(assessment__owner=self.request.user)
 
 
-# I will update with update/delete/detail retrieve later.
+
 class NoteViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
     serializer_class = NoteSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ["subject"]
+    filterset_fields = ["subject", "content_item", "pinned"]
 
     def get_queryset(self):
         return Note.objects.filter(owner=self.request.user)

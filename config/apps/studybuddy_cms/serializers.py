@@ -52,9 +52,12 @@ class AssessmentSerializer(serializers.ModelSerializer):
         return obj.is_due()
 
 
-# only create and list fields made for now
+#id, subject, content, body, tags, pinned, created_at time, and update time fields
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
-        fields = ["id", "subject", "body", "created_at"]
+        fields = [
+            "id", "subject", "content_item", "body", "tags",
+            "pinned", "created_at", "updated_at",
+        ]
         read_only_fields = ["created_at"]

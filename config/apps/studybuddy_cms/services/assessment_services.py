@@ -1,6 +1,5 @@
 #student improvement measurement. "on track is defined as avg score > lookback attempts meeting assessment passing score"
 
-
 def is_on_track(assessment, lookback=3):
     
     recent = list(assessment.attempts.all()[:lookback])
