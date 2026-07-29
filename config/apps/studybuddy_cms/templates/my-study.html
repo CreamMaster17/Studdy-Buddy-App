@@ -40,12 +40,15 @@
 
                 <h3>{{ quiz.quiz_title }}</h3>
 
-                <p>Created: {{ quiz.created_at }}</p>
+                <div class="card-footer">
 
-                <button onclick="openQuiz({{quiz.id}});">
-                    Practice Quiz
-                </button>
+                    <p>Created: {{ quiz.created_at }}</p>
 
+                    <button onclick="openQuiz({{quiz.id}});">
+                        Practice Quiz
+                    </button>
+
+                </div>
             </div>
 
         {% empty %}
@@ -72,12 +75,15 @@
 
                 <h3>{{ summary.summary_title }}</h3>
 
-                <p>{{ summary.created_at }}</p>
+                <div class="card-footer">
 
-                <button onclick="viewSummary({{ summary.id }})">
-                    View Summary
-                </button>
+                    <p>{{ summary.created_at }}</p>
 
+                    <button onclick="viewSummary({{ summary.id }})">
+                        View Summary
+                    </button>
+
+                </div>
             </div>
 
         {% empty %}
@@ -104,8 +110,15 @@
 
                 <h3>{{ cards.flashcard_title }}</h3>
 
+                <div class="card-footer">
+
                 <p>{{ cards.created_at }}</p>
 
+                    <button onclick="viewFlashcards({{ cards.id }})">
+                        View Flashcards
+                    </button>
+
+                </div>
             </div>
 
         {% empty %}
@@ -122,8 +135,8 @@
 
         <div id="summary-modal">
 
-            <button id="close-summary" onclick="hideSummary()">
-                Back
+            <button id="close-summary" onclick="hidePopupContent()">
+                Close
             </button>
 
             <div id="summary-content"></div>
@@ -151,6 +164,18 @@
             {% endfor %}
 
         };
+
+
+        const flashcardsDict = {
+
+            {% for cards in flashcards %}
+
+                {{ cards.id }}: {{ cards.flashcard_data|safe }},
+
+            {% endfor %}
+
+        };
+
     </script>
 
     <script src="{% static 'js/my-study.js' %}"></script>

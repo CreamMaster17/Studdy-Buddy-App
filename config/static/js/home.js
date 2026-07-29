@@ -1,4 +1,3 @@
-console.log("loaded even newer stuff");
 // Profile Picture and Dropdown menu
 const profilePic = document.getElementById("profile-pic");
 const dropdown = document.getElementById("profile-dropdown");
@@ -88,7 +87,6 @@ submitButton.addEventListener("click", async function () {
         );
 
         const data = await response.json();
-        console.log(data);
 
 
         if (!response.ok) {
