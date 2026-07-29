@@ -36,7 +36,7 @@ The student will request one of three study tools:
 3. Quiz - create practice assessment questions.
 
 Return ONLY valid JSON.
-Do not use markdown code fences.
+Do not use markdown code fences or formatting.
 Do not include explanations outside of the JSON.
 """
 def summarize_notes(text: str) -> dict:
