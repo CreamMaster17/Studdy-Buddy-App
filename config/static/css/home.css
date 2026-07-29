@@ -83,7 +83,8 @@
 
 }
 
-.study-options button {
+.study-options button,
+.show-answer-btn {
 
     padding: 10px 18px;
     border-radius: 20px;
@@ -94,13 +95,13 @@
 
 }
 
-.study-options button:hover{
+.study-options button:hover,
+.show-answer-btn:hover {
 
     background: #eeeeee;
     border-color: #eeeeee;
 
 }
-
 .study-options .active {
 
     background: #eeeeee;
@@ -149,7 +150,20 @@
 }
 
 
+.flashcard {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: white;
+}
 
+.flashcard h3 {
+    margin-top: 0;
+}
+.show-answer-btn {
+    margin-top: 10px;
+}
 /* -=-=- Generate Button -=-=- */
 
 #submit-button {
