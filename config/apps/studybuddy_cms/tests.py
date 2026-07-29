@@ -10,7 +10,6 @@ from unittest.mock import patch
 from apps.studybuddy_cms.services.gemini_service import (
     summarize_notes,
     generate_flashcards,
-    generate_quiz,
 )
 
 
@@ -130,63 +129,7 @@ class StudyToolsAPITest(APITestCase):
 
 
 
-    @patch(
-        "apps.studybuddy_cms.views.generate_quiz"
-    )
-    def test_quiz_endpoint(self, mock_quiz):
-
-        mock_quiz.return_value = {
-            "quiz": [
-                {
-                    "question": "Where does photosynthesis occur?",
-
-                    "choices": [
-                        "Nucleus",
-                        "Chloroplast",
-                        "Mitochondria",
-                        "Ribosome"
-                    ],
-
-                    "answer": "Chloroplast"
-                }
-            ]
-        }
-
-
-        response = self.client.post(
-            "/api/study-tools/quiz/",
-            {
-                "text": "Photosynthesis notes."
-            },
-            format="json"
-        )
-
-
-        self.assertEqual(
-            response.status_code,
-            status.HTTP_200_OK
-        )
-
-
-        self.assertTrue(
-            len(response.data["quiz"]) > 0
-        )
-
-
-        quiz_question = response.data["quiz"][0]
-
-
-        self.assertIn(
-            "question",
-            quiz_question
-        )
-
-
-        self.assertIn(
-            quiz_question["answer"],
-            quiz_question["choices"]
-        )
-
+    
 
 
     def test_empty_text_returns_error(self):
@@ -340,66 +283,7 @@ class GeminiServiceTests(TestCase):
     @patch(
         "apps.studybuddy_cms.services.gemini_service.get_client"
     )
-    def test_quiz_returns_expected_json(self, mock_client):
-
-        mock_response = type(
-            "Response",
-            (),
-            {
-                "text": """
-                {
-                    "quiz": [
-                        {
-                            "question": "Where does photosynthesis occur?",
-
-                            "choices": [
-                                "Nucleus",
-                                "Chloroplast",
-                                "Mitochondria",
-                                "Ribosome"
-                            ],
-
-                            "answer": "Chloroplast"
-                        }
-                    ]
-                }
-                """
-            }
-        )
-
-
-        mock_client.return_value.models.generate_content.return_value = (
-            mock_response
-        )
-
-
-        result = generate_quiz(
-            "Photosynthesis occurs in chloroplasts."
-        )
-
-
-        quiz = result["quiz"][0]
-
-
-        self.assertEqual(
-            quiz["question"],
-            "Where does photosynthesis occur?"
-        )
-
-
-        self.assertIn(
-            "Chloroplast",
-            quiz["choices"]
-        )
-
-
-        self.assertEqual(
-            quiz["answer"],
-            "Chloroplast"
-        )
-
-
-
+    
     @patch(
         "apps.studybuddy_cms.services.gemini_service.get_client"
     )

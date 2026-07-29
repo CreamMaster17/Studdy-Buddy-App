@@ -43,4 +43,23 @@ urlpatterns = [
         views.recommendations_status,
         name="rec-status",
     ),
+
+    path(
+        "api/quiz/submit-and-save/<int:quiz_id>/",
+        views.submit_saved_quiz,
+        name="submit-saved-quiz",
+    ),
+
+    # Quiz Page
+    path(
+        "quiz/",
+        views.quiz_page,
+        name="quiz-page",
+    ),
+
+    path(
+        "quiz/practice/<int:quiz_id>/",
+        views.practice_saved_quiz,
+        name="practice-saved-quiz"
+    ),
 ]

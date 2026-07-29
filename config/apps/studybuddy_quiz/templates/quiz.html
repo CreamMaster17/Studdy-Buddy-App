@@ -1,0 +1,55 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz</title>
+
+    <link rel="stylesheet" href="{% static 'css/quiz.css' %}">
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <div class="quiz-header">
+
+        <a href="{% url 'studybuddy_cms:home' %}" class="nav-button">
+            Go Home
+        </a>
+
+        <h1 id="quiz-title"></h1>
+
+        <a href="{% url 'studybuddy_cms:my-study' %}" class="nav-button">
+            My Study
+        </a>
+
+    </div>
+
+    <form id="quiz-form">
+
+        <div id="questions-container"></div>
+
+        <button type="submit">
+            Submit Quiz
+        </button>
+
+    </form>
+
+
+    <div id="results"></div>
+
+</div>
+
+
+{{ quiz|json_script:"quiz-data" }}
+<script>
+    window.djangoQuiz = JSON.parse(document.getElementById("quiz-data").textContent);
+    window.quizId = "{{ quiz_id|default:'' }}"
+</script>
+
+<script src="{% static 'js/quiz.js' %}"></script>
+
+</body>
+</html>

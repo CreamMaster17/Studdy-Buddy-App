@@ -1,3 +1,4 @@
+console.log("loaded even newer stuff");
 // Profile Picture and Dropdown menu
 const profilePic = document.getElementById("profile-pic");
 const dropdown = document.getElementById("profile-dropdown");
@@ -54,21 +55,41 @@ submitButton.addEventListener("click", async function () {
 
     output.textContent = "Please wait while we are generating your study material...";
 
-    try {
+    let endpoint = `/api/study-tools/${action}/`;
+    let bigBody = {text: userInput};
 
-        const response = await fetch(`/api/study-tools/${action}/`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": getCSRF("csrftoken")
-            },
-            body: JSON.stringify({
-                text: userInput
-            })
-        });
+    // Special case for quiz
+    if (action === "quiz") {
+
+        
+        endpoint = "/api/quiz/generate";
+        bigBody = {
+            notes: userInput,
+            num_questions: 5
+        
+        }
+
+    }
+
+    try {
+        
+        const response = await fetch (
+            endpoint,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": getCSRF("csrftoken")
+                },
+                body: JSON.stringify(bigBody)
+            }
+            
+        );
 
         const data = await response.json();
         console.log(data);
+
 
         if (!response.ok) {
             throw new Error(data.error || "Something went wrong.");
@@ -79,6 +100,7 @@ submitButton.addEventListener("click", async function () {
             displaySummary(data);
 
         }
+
         else if (action === "flashcards") {
 
             displayFlashcards(data.flashcards);
@@ -86,8 +108,7 @@ submitButton.addEventListener("click", async function () {
         }
         else if (action === "quiz") {
 
-            displayQuiz(data.quiz);
-
+            window.location.href = `/quiz/?quiz_id=${data.quiz_id}`;
         }
 
     }
@@ -175,34 +196,6 @@ function displayFlashcards(flashcards) {
         });
 
         output.appendChild(flashcard);
-
-    });
-
-}
-
-
-// Display Quiz
-function displayQuiz(quiz) {
-
-    output.innerHTML = "";
-
-    quiz.forEach((item, index) => {
-
-        const question = document.createElement("div");
-
-        question.innerHTML = `
-            <h3>${index + 1}. ${item.question}</h3>
-
-            <ul>
-                ${item.choices.map(choice => `<li>${choice}</li>`).join("")}
-            </ul>
-
-            <p><strong>Answer:</strong> ${item.answer}</p>
-
-            <hr>
-        `;
-
-        output.appendChild(question);
 
     });
 

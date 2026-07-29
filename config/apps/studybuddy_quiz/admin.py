@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import GeneratedQuiz, QuizQuestionResult, QuizResult
+from .models import QuizQuestionResult, QuizResult
+from apps.studybuddy_cms.models import SavedQuiz
 
 
 class QuizQuestionResultInline(admin.TabularInline):
@@ -33,7 +34,8 @@ class QuizResultAdmin(admin.ModelAdmin):
     inlines = [QuizQuestionResultInline]
 
 
-@admin.register(GeneratedQuiz)
+@admin.register(SavedQuiz)
 class GeneratedQuizAdmin(admin.ModelAdmin):
-    list_display = ("id", "user", "quiz_title", "source_notes_length", "created_at")
-    search_fields = ("quiz_title", "user__username")
+    list_display = ("id", "user", "quiz_title", "created_at")
+    search_fields = ("quiz_title", "user_username")
+    readonly_fields = ("quiz_data", "created_at")

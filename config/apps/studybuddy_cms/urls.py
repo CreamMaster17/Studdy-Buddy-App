@@ -18,6 +18,7 @@ router.register(
 urlpatterns = [
 
     path("home/", views.home, name="home"),
+    path("my-study/", views.my_study, name="my-study"),
 
     # API Routes
     path("api/", include(router.urls)),

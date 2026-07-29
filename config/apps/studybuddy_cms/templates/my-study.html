@@ -1,0 +1,160 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Study Stuff</title>
+
+    <link rel="stylesheet" href="{% static 'css/my-study.css' %}">
+
+</head>
+<body>
+    
+
+
+<div class="study-container">
+
+    <div class="study-header">
+
+        <a href="{% url 'studybuddy_cms:home' %}" class="nav-button">
+            Back Home
+        </a>
+
+        <h1>My Study</h1>
+
+        <div></div>
+
+    </div>
+
+    <section>
+
+        <h2>Quizzes</h2>
+
+        <div class="card-grid">
+
+        {% for quiz in quizzes %}
+
+            <div class="study-card">
+
+                <h3>{{ quiz.quiz_title }}</h3>
+
+                <p>Created: {{ quiz.created_at }}</p>
+
+                <button onclick="openQuiz({{quiz.id}});">
+                    Practice Quiz
+                </button>
+
+            </div>
+
+        {% empty %}
+
+            <p>No saved quizzes.</p>
+
+        {% endfor %}
+
+        </div>
+
+    </section>
+
+
+
+    <section>
+
+        <h2>Summaries</h2>
+
+        <div class="card-grid">
+
+        {% for summary in summaries %}
+
+            <div class="study-card">
+
+                <h3>{{ summary.summary_title }}</h3>
+
+                <p>{{ summary.created_at }}</p>
+
+                <button onclick="viewSummary({{ summary.id }})">
+                    View Summary
+                </button>
+
+            </div>
+
+        {% empty %}
+
+            <p>No saved summaries.</p>
+
+        {% endfor %}
+
+        </div>
+
+    </section>
+
+
+
+    <section>
+
+        <h2>Flashcards</h2>
+
+        <div class="card-grid">
+
+        {% for cards in flashcards %}
+
+            <div class="study-card">
+
+                <h3>{{ cards.flashcard_title }}</h3>
+
+                <p>{{ cards.created_at }}</p>
+
+            </div>
+
+        {% empty %}
+
+            <p>No saved flashcards.</p>
+
+        {% endfor %}
+
+        </div>
+
+    </section>
+
+    <div id="summary-overlay">
+
+        <div id="summary-modal">
+
+            <button id="close-summary" onclick="hideSummary()">
+                Back
+            </button>
+
+            <div id="summary-content"></div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+    function openQuiz(id){
+
+        window.location.href =
+        `/quiz/practice/${id}/`;
+
+    }
+    </script>
+    <script>
+        const summariesDict = {
+
+            {% for summary in summaries %}
+
+                {{ summary.id }}: {{ summary.summary_data|safe }},
+
+            {% endfor %}
+
+        };
+    </script>
+
+    <script src="{% static 'js/my-study.js' %}"></script>
+
+</div>
+</body>
+</html>

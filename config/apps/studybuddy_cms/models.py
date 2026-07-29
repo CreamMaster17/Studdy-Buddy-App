@@ -96,7 +96,7 @@ class AssessmentAttempt(models.Model):
         return f"{self.assessment.title}: {self.score}%"
 
 
-#not finished atm 
+
 class Note(models.Model):
     subject = models.ForeignKey(Subject, related_name="notes", on_delete=models.CASCADE)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -124,3 +124,67 @@ class Note(models.Model):
     
     def __str__(self):
         return f"Note ({self.subject.name}, {self.created_at:%Y-%m-%d})"
+
+class SavedSummary(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="saved_summaries"
+    )
+
+    summary_title = models.CharField(max_length=255)
+    summary_data = models.JSONField()
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return self.summary_title
+
+
+
+class SavedFlashcards(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="saved_flashcards"
+    )
+
+    flashcard_title = models.CharField(max_length=255)
+    flashcard_data = models.JSONField()
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return self.flashcard_title
+
+
+
+class SavedQuiz(models.Model):
+    """
+    Stores generated quiz JSON.
+    Quiz attempts/results remain in studybuddy_quiz.
+    """
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="saved_quizzes"
+    )
+
+    quiz_title = models.CharField(max_length=255)
+    subject = models.ForeignKey(Subject, null=True, blank=True, on_delete=models.SET_NULL)
+    quiz_data = models.JSONField()
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return self.quiz_title

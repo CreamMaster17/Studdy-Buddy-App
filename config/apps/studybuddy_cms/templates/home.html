@@ -97,10 +97,6 @@
                     Quiz
                 </button>
 
-                <button class="mode" data-action="study guide">
-                    Study Guide
-                </button>
-
             </div>
 
 
@@ -131,10 +127,17 @@
     <section id="output">
         <div class="ai-response">
 
-            <!-- Splash Text -->
-            <h2>
-                Your Study Material
-            </h2>
+            <div class="response-header">
+                <!-- Splash Text -->
+                <h2>
+                    Your Study Material
+                </h2>
+
+                <!-- Go to my study content -->
+                <a href="{% url 'studybuddy_cms:my-study' %}" class="my-study-button">
+                    My Study
+                </a>
+            </div>
 
             <!-- Actual AI Response -->
             <div id="response-content">

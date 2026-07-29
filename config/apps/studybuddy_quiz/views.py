@@ -3,27 +3,28 @@ Django REST API views for Study Buddy Quiz features
 Author: Samuel Gamon
 
 Endpoints:
-  POST /api/quiz/generate
-  POST /api/quiz/grade
-  POST /api/quiz/submit-and-save
-  POST /api/history/save
-  GET  /api/history/list
-  GET  /api/history/detail/<id>
-  GET  /api/history/stats
-  GET  /api/stats/dashboard
-  POST /api/stats/refresh
-  GET  /api/stats/quick-summary
-  POST /api/recommendations/generate
-  GET  /api/recommendations/cached
-  GET  /api/recommendations/status
+  POST /api/quiz/generate/
+  POST /api/quiz/grade/
+  POST /api/quiz/submit-and-save/<quiz_id>/
+  POST /api/history/save/
+  GET  /api/history/list/
+  GET  /api/history/detail/<id>/
+  GET  /api/history/stats/
+  GET  /api/stats/dashboard/
+  POST /api/stats/refresh/
+  GET  /api/stats/quick-summary/
+  POST /api/recommendations/generate/
+  GET  /api/recommendations/cached/
+  GET  /api/recommendations/status/
 """
 
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
-from .models import GeneratedQuiz
 from .quiz_generator import (
     generate_quiz_from_notes,
     grade_quiz_submission,
@@ -44,6 +45,7 @@ from .study_recommendations import (
     check_rate_limit,
     generate_study_recommendations,
 )
+from apps.studybuddy_cms.models import SavedQuiz
 from .study_stats import get_quick_summary, get_user_dashboard_stats
 from django.utils import timezone
 
@@ -82,16 +84,16 @@ def generate_quiz(request):
     if "error" in quiz_data:
         return Response(quiz_data, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    request.session["last_generated_quiz"] = quiz_data
+    print("QUIZ DATA BEFORE SAVE:")
+    print(quiz_data)
 
-    GeneratedQuiz.objects.create(
+    saved_quiz = SavedQuiz.objects.create(
         user=request.user,
         quiz_title=quiz_data.get("quiz_title", "Generated Quiz"),
         quiz_data=quiz_data,
-        source_notes_length=quiz_data.get("source_notes_length"),
     )
 
-    return Response(quiz_for_client(quiz_data), status=status.HTTP_200_OK)
+    return Response({**quiz_for_client(quiz_data), "quiz_id": saved_quiz.id}, status=status.HTTP_200_OK)
 
 
 @api_view(["POST"])
@@ -105,19 +107,19 @@ def grade_quiz(request):
             status=status.HTTP_400_BAD_REQUEST,
         )
 
-    quiz_data = request.session.get("last_generated_quiz")
-    if not quiz_data:
+    quiz = request.session.get("last_generated_quiz")
+    if not quiz:
         return Response(
             {"error": "No quiz found. Please generate a quiz first."},
             status=status.HTTP_400_BAD_REQUEST,
         )
 
-    results = grade_quiz_submission(quiz_data, answers)
+    results = grade_quiz_submission(quiz, answers)
     if "error" in results:
         return Response(results, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     request.session["last_graded_result"] = {
-        "quiz_title": quiz_data.get("quiz_title", "Untitled Quiz"),
+        "quiz_title": quiz.get("quiz_title", "Untitled Quiz"),
         "results": results,
     }
     return Response(results, status=status.HTTP_200_OK)
@@ -134,27 +136,60 @@ def submit_and_save_quiz(request):
             status=status.HTTP_400_BAD_REQUEST,
         )
 
-    quiz_data = request.session.get("last_generated_quiz")
-    if not quiz_data:
+    quiz = request.session.get("last_generated_quiz")
+    if not quiz:
         return Response(
             {"error": "No quiz found. Please generate a quiz first."},
             status=status.HTTP_400_BAD_REQUEST,
         )
 
-    results = grade_quiz_submission(quiz_data, answers)
+    results = grade_quiz_submission(quiz.quiz_data, answers)
     if "error" in results:
         return Response(results, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     save_result = save_quiz_result(
         user=request.user,
-        quiz_title=quiz_data.get("quiz_title", "Untitled Quiz"),
+        quiz_title=quiz.get("quiz_title", "Untitled Quiz"),
         score_percentage=results["score_percentage"],
         correct_count=results["correct_count"],
         total_questions=results["total_questions"],
         question_results=results["question_results"],
     )
-    results["saved_to_history"] = save_result
+    results["save_to_history"] = save_result
     return Response(results, status=status.HTTP_200_OK)
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def submit_saved_quiz(request, quiz_id):
+
+    try:
+        quiz = SavedQuiz.objects.get(id=quiz_id,user=request.user)
+
+    except SavedQuiz.DoesNotExist:
+        return Response({"error": "quiz not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    answers = request.data.get("answers")
+
+    if not isinstance(answers, dict):
+        return Response({"error": "Missing required field: 'answers'"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    results = grade_quiz_submission(quiz.quiz_data, answers)
+    if "error" in results:
+        return Response(results, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    save_result = save_quiz_result(
+        user= request.user,
+        quiz_title = quiz.quiz_title,
+        score_percentage= results["score_percentage"],
+        correct_count= results["correct_count"],
+        total_questions= results["total_questions"],
+        question_results= results["question_results"],
+    )
+
+    results["save_to_history"] = save_result
+
+    return Response(results)
 
 
 # ---------- History ----------
@@ -311,3 +346,37 @@ def recommendations_status(request):
             "rate_limit_seconds": RATE_LIMIT_SECONDS,
         }
     )
+
+
+# ---------- User Viewed Pages ----------
+
+
+@login_required
+def practice_saved_quiz(request, quiz_id):
+
+    try:
+        quiz = SavedQuiz.objects.get(id=quiz_id,user=request.user)
+
+    except SavedQuiz.DoesNotExist:
+        return Response({"error": "Quiz does not exist in database"}, status=404)
+
+    #request.session["last_generated_quiz"] = quiz.quiz_data
+
+    return render(request, "quiz.html",{"quiz": quiz_for_client(quiz.quiz_data), "quiz_id":quiz.id})
+
+
+@login_required
+def quiz_page(request):
+
+    quiz_id = request.GET.get("quiz_id")
+
+    if not quiz_id:
+        return Response({"error": "missing quiz_id"}, status=404)
+
+    try:
+        quiz = SavedQuiz.objects.get(id=quiz_id, user=request.user)
+
+    except SavedQuiz.DoesNotExist:
+        return Response({"error": "Quiz does not exist in database"}, status=404)
+
+    return render(request, "quiz.html",{"quiz": quiz_for_client(quiz.quiz_data),"quiz_id": quiz.id})

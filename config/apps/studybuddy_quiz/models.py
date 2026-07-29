@@ -33,7 +33,7 @@ class QuizResult(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.quiz_title} ({self.score_percentage}%) — {self.user_id}"
+        return f"{self.title} ({self.score_percentage}%) — {self.user_id}"
 
 
 class QuizQuestionResult(models.Model):
@@ -60,26 +60,3 @@ class QuizQuestionResult(models.Model):
 
     def __str__(self):
         return f"Q{self.question_id} ({'✓' if self.is_correct else '✗'})"
-
-
-class GeneratedQuiz(models.Model):
-    """Snapshot of an AI-generated quiz for review/retake."""
-
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="generated_quizzes",
-    )
-    quiz_title = models.CharField(max_length=255)
-    quiz_data = models.JSONField()
-    source_notes_length = models.PositiveIntegerField(null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ["-created_at"]
-        indexes = [
-            models.Index(fields=["user", "-created_at"]),
-        ]
-
-    def __str__(self):
-        return f"{self.quiz_title} (user {self.user_id})"

@@ -8,7 +8,16 @@ from rest_framework import status
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from .models import Assessment, AssessmentAttempt, ContentItem, Note, Subject
+from .models import (
+    Assessment, 
+    AssessmentAttempt, 
+    ContentItem, 
+    Note, 
+    Subject, 
+    SavedFlashcards, 
+    SavedQuiz, 
+    SavedSummary
+)
 from .serializers import (
     AssessmentAttemptSerializer,
     AssessmentSerializer,
@@ -18,10 +27,10 @@ from .serializers import (
 )
 from .services.gemini_service import (
     generate_flashcards,
-    generate_quiz,
     summarize_notes,
 )
 from .services.assessment_services import is_on_track
+from ..studybuddy_quiz.quiz_generator import generate_quiz_from_notes
 
 class SubjectViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Subject.objects.all()
@@ -123,6 +132,11 @@ class StudyToolsViewSet(viewsets.ViewSet):
 
         try:
             summary = summarize_notes(text)
+            SavedSummary.objects.create(
+                user=request.user,
+                summary_title=summary.get("title","AI Summary"),
+                summary_data=summary
+            )
             return Response(summary)
         except Exception as error:
             return Response(
@@ -139,6 +153,11 @@ class StudyToolsViewSet(viewsets.ViewSet):
 
         try:
             flashcards = generate_flashcards(text)
+            SavedFlashcards.objects.create(
+                user=request.user,
+                flashcard_title=flashcards.get("title","AI Flashcards"),
+                flashcard_data=flashcards
+            )
             return Response(flashcards)
         except Exception as error:
             return Response(
@@ -146,26 +165,6 @@ class StudyToolsViewSet(viewsets.ViewSet):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
-    @action(detail=False, methods=["post"])
-    def quiz(self, request):
-        text, error_response = self.get_text(request)
-
-        if error_response:
-            return error_response
-
-        try:
-            quiz = generate_quiz(text)
-            return Response(quiz)
-        except ValueError as error:
-            return Response(
-                {"error": str(error)},
-                status=status.HTTP_502_BAD_GATEWAY,
-            )
-        except Exception as error:
-            return Response(
-                {"error": str(error)},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            )
 
 
 
@@ -173,3 +172,18 @@ class StudyToolsViewSet(viewsets.ViewSet):
 def home(request):
     
     return render(request, "home.html")
+
+@login_required
+def my_study(request):
+
+    quizzes = SavedQuiz.objects.filter(user=request.user)
+    summaries = SavedSummary.objects.filter(user=request.user)
+    flashcards = SavedFlashcards.objects.filter(user=request.user)
+
+    return render(request,
+                  "my-study.html",
+                  {
+                      "quizzes": quizzes,
+                      "summaries": summaries,
+                      "flashcards": flashcards
+                  })
