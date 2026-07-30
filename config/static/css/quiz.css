@@ -164,24 +164,40 @@
 
 
 
-/* -=-=- Results -=-=- */
+/* -=-=- Result Header -=-=- */
 
 #results {
 
-    margin-top: 35px;
-    text-align: center;
+    background:#f9fafb;
+    border-radius:20px;
+    padding:20px;
+    margin-bottom:30px;
 
 }
+
 
 #results h2 {
 
-    font-size: 30px;
+    margin-top:0;
 
 }
 
-#results p {
+
+
+/* -=-=- Answer Text -=-=- */
+
+.question p {
 
     color:#555;
-    font-size:18px;
+    line-height:1.5;
+
+}
+
+
+.question hr {
+
+    border:none;
+    border-top:1px solid #ddd;
+    margin:20px 0;
 
 }

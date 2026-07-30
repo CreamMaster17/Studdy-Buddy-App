@@ -124,7 +124,7 @@ class StudyToolsViewSet(viewsets.ViewSet):
         return text.strip(), None
 
     @action(detail=False, methods=["post"])
-    def summarize(self, request):
+    def summary(self, request):
         text, error_response = self.get_text(request)
 
         if error_response:
@@ -187,3 +187,6 @@ def my_study(request):
                       "summaries": summaries,
                       "flashcards": flashcards
                   })
+
+def main(request):
+    return render(request, "main.html")

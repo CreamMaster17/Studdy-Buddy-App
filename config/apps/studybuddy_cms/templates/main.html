@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyBuddy | AI Study Assistant</title>
+
+    {% load static %}
+    
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            <img src="{% static 'images/SB_logo.png' %}">
+            <h2>StudyBuddy</h2>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how">How It Works</a></li>
+            <li><a href="#about">About</a></li>
+        </ul>
+
+        <div class="accounts">
+            <a href="{% url 'studybuddy_cms:home' %}" class="login-btn">
+                Login
+            </a>
+
+            <a href="{% url 'accounts:registration' %}" class="login-btn">
+                Register
+            </a>
+        </div>
+    </nav>
+
+
+    <!-- Hero Section -->
+
+    <section class="hero">
+
+        <div class="hero-text">
+
+            <h1>
+                Your AI Powered 
+            </h1>
+            <h1 style="color: #396483; margin-top: 10px;">
+                Study Buddy
+            </h1>
+
+            <p>
+                Upload notes and lectures to instantly generate summaries,
+                flashcards, quizzes, and study guides with AI.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="{% url 'accounts:registration' %}">
+                    Get Started Free
+                </a>
+
+                <a href="#features">
+                    Learn More
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="hero-image">
+
+            <img src="{% static 'images/SB_logo.png' %}" alt="StudyBuddy">
+
+        </div>
+
+    </section>
+
+
+    <!-- Features -->
+
+    <section id="features" class="features">
+
+        <h2>Everything You Need to Study Smarter</h2>
+
+        <div class="feature-grid">
+
+            <div class="feature-card">
+                <h3>AI Summaries</h3>
+                <p>
+                    Turn long lectures into easy-to-read summaries in seconds.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h3>Flashcards</h3>
+                <p>
+                    Generate interactive flashcards from your own notes.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h3>Practice Quizzes</h3>
+                <p>
+                    Test yourself with automatically generated quizzes.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h3>Fast AI</h3>
+                <p>
+                    Get personalized study resources almost instantly.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <h3>Save Everything</h3>
+                <p>
+                    Keep all of your generated study materials in one place.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- How it Works -->
+
+    <section id="how" class="steps">
+
+        <h2>How It Works</h2>
+
+        <div class="step-container">
+
+            <div class="step">
+                <span>1</span>
+                <h3>Upload</h3>
+                <p>Upload notes or paste your lecture.</p>
+            </div>
+
+            <div class="step">
+                <span>2</span>
+                <h3>Select</h3>
+                <p>Choose summaries, flashcards, or quizzes.</p>
+            </div>
+
+            <div class="step">
+                <span>3</span>
+                <h3>Study</h3>
+                <p>Review AI-generated content anytime.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Join US -->
+
+    <section class="cta">
+
+        <h2>Ready to Ace Your Next Exam?</h2>
+
+        <p>
+            Join thousands of students using AI to study more efficiently.
+        </p>
+
+        
+        <a href="{% url 'accounts:registration' %}"  style="text-align: center;">
+            Start Studying
+        </a>
+
+    </section>
+
+    <!-- About Us -->
+     <section id="about" class="about">
+
+        <h2>Who are we?</h2>
+
+        <p>
+            Study Buddy was developed by 4 people: 
+            Broudy Negron, Daniel Yapur, Justin Wissart, and Samuel Gamon.
+        </p>
+
+        <p>It was created during the FIU KFSCIS Summer 2026 Term in Capstone II. 
+            Special thanks to Professor Masoud Sadjadi.
+        </p>
+
+     </section>
+
+
+    <footer>
+
+        <p>
+            2026 StudyBuddy • AI Study Assistant
+        </p>
+
+    </footer>
+
+</body>
+</html>

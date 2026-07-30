@@ -62,4 +62,16 @@ urlpatterns = [
         views.practice_saved_quiz,
         name="practice-saved-quiz"
     ),
+
+    path(
+        "quiz-history/",
+        views.quiz_history_pages,
+        name="quiz-history",
+        ),
+
+    path(
+        "quiz-results/<int:quiz_result_id>",
+        views.quiz_results,
+        name="quiz-results",
+        ),
 ]

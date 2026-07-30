@@ -1,0 +1,68 @@
+@import "my-study.css";
+
+/* -=-=- Quiz Header -=-=- */
+
+.study-header {
+
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    margin-bottom: 35px;
+
+}
+
+.study-header h1 {
+
+    margin: 0;
+    text-align: center;
+    font-size: 40px;
+
+}
+
+.study-header .nav-button:first-child {
+
+    justify-self: start;
+
+}
+
+.study-header .nav-button:last-child {
+
+    justify-self: end;
+
+}
+
+.excellent{
+    background:#d9f8d9;
+    width: 20%;
+    color:#2b7d2b;
+}
+
+.good{
+    background:#d9ecff;
+    width: 18%;
+    color:#2366b2;
+}
+
+.okay{
+    background:#fff5d8;
+    width: 18%;
+    color:#996600;
+}
+
+.poor{
+    background:#ffe1e1;
+    width: 18%;
+    color:#b12222;
+}
+
+.light{
+
+    background:white;
+
+}
+
+.dark {
+
+    background:#eeeeee;
+
+}

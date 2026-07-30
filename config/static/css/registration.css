@@ -20,6 +20,37 @@ h2 {
 
 }
 
+/* -=-=- Logo -=-=- */
+
+.logo{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.logo img{
+
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    object-position: center;
+
+}
+
+.logo h1{
+    margin:0;
+    font-size:32px;
+    color:#333;
+    font-weight:bold;
+    text-decoration: none;
+}
+
+.logo-link {
+    text-decoration: none;
+    color: black;
+}
+
 
 
 /* -=-=- On-Screen Box -=-=- */

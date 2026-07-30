@@ -380,3 +380,17 @@ def quiz_page(request):
         return Response({"error": "Quiz does not exist in database"}, status=404)
 
     return render(request, "quiz.html",{"quiz": quiz_for_client(quiz.quiz_data),"quiz_id": quiz.id})
+
+@login_required
+def quiz_history_pages(request):
+
+    history = get_user_quiz_history(request.user)
+    stats = get_user_quiz_stats(request.user)
+
+    return render(request, "quiz-history.html", {"history": history, "stats": stats})
+
+@login_required
+def quiz_results(request, quiz_result_id):
+    result = get_quiz_result_detail(quiz_result_id, request.user)
+
+    return render(request, "quiz-results.html", {"result": result})

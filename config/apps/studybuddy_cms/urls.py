@@ -17,6 +17,7 @@ router.register(
 
 urlpatterns = [
 
+    path("", views.main, name="main"),
     path("home/", views.home, name="home"),
     path("my-study/", views.my_study, name="my-study"),
 

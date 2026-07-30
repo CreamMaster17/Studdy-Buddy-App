@@ -67,7 +67,7 @@ def registration_page(request):
             messages.success(request, "Account was successfully created!")
 
         except IntegrityError as e:
-            messages.error(request, f"An account already exists with that username.")
+            messages.error(request, f"An account already exists with that username/email.")
         
     return render(request, "registration.html")
 

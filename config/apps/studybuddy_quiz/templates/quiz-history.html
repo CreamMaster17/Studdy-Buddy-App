@@ -1,0 +1,109 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz History</title>
+
+    <link rel="stylesheet" href="{% static 'css/quiz-history.css' %}">'
+
+</head>
+<body>
+    
+
+
+<div class="study-container">
+
+    <div class="study-header">
+
+
+        <a href="{% url 'studybuddy_cms:home' %}" class="nav-button">
+            Go Home
+        </a>
+
+
+        <h1>Quiz History</h1>
+
+
+        <a href="{% url 'studybuddy_cms:my-study' %}" class="nav-button">
+            My Study
+        </a>
+
+
+    </div>
+
+    <section>
+
+        <h2>Past Quizzes</h2>
+
+        <div class="card-grid">
+
+        {% for quiz in history %}
+
+            <div class="study-card {% cycle 'light' 'light' 'light' 'light' 'dark' 'dark' 'dark' 'dark' %}">
+
+                    <h3>{{ quiz.quiz_title }}</h3>
+
+                    <div class="score">
+                        {% if quiz.score_percentage >= 90 %}
+
+                            <p class="score excellent">
+                                {{ quiz.score_percentage }}%
+                            </p>
+
+                            {% elif quiz.score_percentage >= 80 %}
+
+                            <p class="score good">
+                                {{ quiz.score_percentage }}%
+                            </p>
+
+                            {% elif quiz.score_percentage >= 70 %}
+
+                            <p class="score okay">
+                                {{ quiz.score_percentage }}%
+                            </p>
+
+                            {% else %}
+
+                            <p class="score poor">
+                                {{ quiz.score_percentage }}%
+                            </p>
+
+                        {% endif %}
+                    </div>
+
+                <p>
+                    <strong>Correct:</strong>
+                    {{ quiz.correct_count }}/{{ quiz.total_questions }}
+                </p>
+
+                <div class="card-footer">
+
+                    <p>
+                        {{ quiz.taken_at|date:"M d, Y g:i A" }}
+                    </p>
+
+                    <button
+                        onclick="location.href='{% url 'studybuddy_quiz:quiz-results' quiz.quiz_result_id %}'">
+                        View Results
+                    </button>
+
+                </div>
+
+            </div>
+
+        {% empty %}
+
+            <p>You haven't completed any quizzes yet.</p>
+
+        {% endfor %}
+
+        </div>
+
+    </section>
+
+</div>
+</body>
+</html>

@@ -1,3 +1,5 @@
+console.log("reached print")
+
 // Profile Picture and Dropdown menu
 const profilePic = document.getElementById("profile-pic");
 const dropdown = document.getElementById("profile-dropdown");
@@ -60,6 +62,7 @@ submitButton.addEventListener("click", async function () {
     // Special case for quiz
     if (action === "quiz") {
 
+        console.log("shouldnt see me")
         
         endpoint = "/api/quiz/generate";
         bigBody = {
@@ -71,6 +74,8 @@ submitButton.addEventListener("click", async function () {
     }
 
     try {
+
+        console.log("reached 2")
         
         const response = await fetch (
             endpoint,
@@ -86,6 +91,8 @@ submitButton.addEventListener("click", async function () {
             
         );
 
+        console.log("reached 3")
+
         const data = await response.json();
 
 
@@ -93,13 +100,20 @@ submitButton.addEventListener("click", async function () {
             throw new Error(data.error || "Something went wrong.");
         }
 
-        if (action === "summarize") {
+        if (action === "summary") {
+
+            console.log("reached 4")
+            console.log(data);
 
             displaySummary(data);
+
+            console.log("reached 7")
 
         }
 
         else if (action === "flashcards") {
+
+            console.log("reached flashcards?")
 
             displayFlashcards(data.flashcards);
 
@@ -112,7 +126,8 @@ submitButton.addEventListener("click", async function () {
     }
     catch (error) {
 
-        output.textContent = "Error: " + error.message;
+        output.textContent = `There was an error making your ${action}:`;
+        console.log("Error:", error)
 
     }
 
@@ -203,6 +218,7 @@ function displayFlashcards(flashcards) {
 // Display Summary
 function displaySummary(summary) {
 
+    console.log("reached 5")
     output.innerHTML = "";
 
     const title = document.createElement("h2");
@@ -245,5 +261,7 @@ function displaySummary(summary) {
     });
 
     output.appendChild(takeawayList);
+
+    console.log("reached 6")
 
 }

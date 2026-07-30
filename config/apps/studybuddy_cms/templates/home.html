@@ -52,11 +52,12 @@
 
         <!-- Basic Titling w/ Image-->
         <section id="title">
-            
-            <h1>
-                <img src="{% static 'images/SB_logo.png' %}">
-                StudyBuddy
-            </h1>
+            <a class="logo-link" href="{% url 'studybuddy_cms:main' %}">
+                <h1>
+                    <img src="{% static 'images/SB_logo.png' %}">
+                    StudyBuddy
+                </h1>
+            </a>    
         </section>
     
         <!-- Basic Description -->
@@ -85,7 +86,7 @@
             <!-- Choices to Use User Input -->
             <div class="study-options">
 
-                <button class="mode active" data-action="summarize">
+                <button class="mode active" data-action="summary">
                     Summary
                 </button>
 
