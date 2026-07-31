@@ -1,0 +1,168 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Quiz Results</title>
+
+    <link rel="stylesheet" href="{% static 'css/quiz.css' %}">
+
+</head>
+
+<body>
+<div class="quiz-container">
+
+
+    <div class="quiz-header">
+
+
+        <a href="{% url 'studybuddy_quiz:quiz-history' %}" class="nav-button">
+            Quiz History
+        </a>
+
+
+        <h1>
+            {{ result.quiz_title }}
+        </h1>
+
+
+        <a href="{% url 'studybuddy_cms:my-study' %}" class="nav-button">
+            My Study
+        </a>
+
+
+    </div>
+
+
+
+    <!-- Score -->
+
+    <div id="results">
+
+        <h2>
+            Score: {{ result.score_percentage }}%
+        </h2>
+
+
+        <p>
+
+            {{ result.correct_count }}
+            /
+            {{ result.total_questions }}
+            Correct
+
+        </p>
+
+
+        <p>
+
+            Taken:
+            {{ result.taken_at|date:"M d, Y g:i A" }}
+
+        </p>
+
+
+    </div>
+
+
+
+
+    <!-- Questions -->
+
+
+    <div id="questions-container">
+
+
+    {% for question in result.questions %}
+
+
+        <div class="question 
+            {% if question.is_correct %}
+                correct
+            {% else %}
+                incorrect
+            {% endif %}
+        ">
+
+
+            <h3>
+
+                {{ forloop.counter }}.
+                {{ question.question_text }}
+
+            </h3>
+
+
+
+            <p>
+                <strong>Your Answer:</strong>
+            </p>
+
+
+            <p>
+
+                {{ question.user_answer }}
+
+            </p>
+
+
+
+            {% if not question.is_correct %}
+
+                <p>
+                    <strong>Correct Answer:</strong>
+                </p>
+
+
+                <p>
+
+                    {{ question.correct_answer }}
+
+                </p>
+
+
+            {% endif %}
+
+
+
+            {% if question.explanation %}
+
+                <hr>
+
+
+                <p>
+
+                    <strong>Explanation:</strong>
+
+                </p>
+
+
+                <p>
+
+                    {{ question.explanation }}
+
+                </p>
+
+
+            {% endif %}
+
+
+
+        </div>
+
+
+    {% endfor %}
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

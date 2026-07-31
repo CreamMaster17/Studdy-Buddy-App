@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+db.sqlite3
+
+# .env file for environment variables (API keys and whatnot)
+.env
+
+# venv folder for python virtual environments
+venv/

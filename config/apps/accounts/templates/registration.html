@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyBuddy Registration</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/registration.css' %}">
+
+</head>
+<body>
+
+    <!-- Main Body Container -->
+    <div class="container">
+
+        <a class="logo-link" href="{% url 'studybuddy_cms:main' %}">
+            <div class="logo">
+            
+                <img src="{% static 'images/SB_logo.png' %}" alt="StudyBuddy Logo">
+                <h1>StudyBuddy</h1>
+            
+            </div>
+        </a>
+
+        <h2>Create Account</h2>
+
+        <!-- Send Data to Registration View -->
+        <form action="{% url 'accounts:registration' %}" method="POST">
+
+            {% csrf_token %}
+
+            <!-- Username -->
+            <label for="username">Username</label>
+            <input
+                type="text"
+                id="username"
+                name="username"
+                required
+                minlength="3"
+                maxlength="50"
+            >
+
+            <!-- Email -->
+            <label for="email">Email</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                maxlength="50"
+            >
+
+            <!-- Password -->
+            <label for="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                minlength="8"
+                maxlength="255"
+            >
+
+            <!-- Submit Button -->
+            <button type="submit">Register</button>
+        </form>
+
+        <!-- Registration Login Link -->
+        <div class="login-link">
+            Already have an account?
+            <a href="{% url 'accounts:login' %}">Log in</a>
+        </div>
+    </div>
+
+    <!-- Display Messages When Recieved -->
+    <!-- Both Success and Error Messages -->
+    {% if messages %}
+        <div class="message">
+        {% for message in messages %}
+            
+            {{ message}}
+            
+        {% endfor %}
+        </div>
+    {% endif %}
+
+</body>
+</html>

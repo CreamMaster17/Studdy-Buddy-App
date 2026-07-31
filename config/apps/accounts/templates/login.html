@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyBuddy Login</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/registration.css' %}">
+
+</head>
+<body>
+
+    <!-- Main Body Container -->
+    <div class="container">
+
+        <a class="logo-link" href="{% url 'studybuddy_cms:main' %}">
+            <div class="logo">
+            
+                <img src="{% static 'images/SB_logo.png' %}" alt="StudyBuddy Logo">
+                <h1>StudyBuddy</h1>
+            
+            </div>
+        </a>
+
+        <h2>Account Login</h2>
+
+        <!-- Send Data to Login View -->
+        <form action="{% url 'accounts:login' %}" method="POST">
+
+            {% csrf_token %}
+
+            <!-- Username/Email -->
+            <form action="{% url 'accounts:login' %}" method="POST">
+            <label for="username">Username or Email</label>
+            <input
+                type="text"
+                id="username"
+                name="username"
+                required
+                minlength="3"
+                maxlength="50"
+            >
+
+            <!-- Password -->
+            <label for="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                minlength="8"
+                maxlength="255"
+            >
+
+            <!-- Submit Button -->
+            <button type="submit">Login</button>
+        </form>
+
+        <!-- Registration Login Link -->
+        <div class="login-link">
+            Don't have an account?
+            <a href="{% url 'accounts:registration' %}">Sign up</a>
+        </div>
+    </div>
+
+
+    <!-- Display Messages When Recieved -->
+    <!-- Both Success and Error Messages -->
+    {% if messages %}
+    <div class="message">
+        {% for message in messages %}
+            
+            {{ message }}
+            
+        {% endfor %}
+    </div>
+    {% endif %}
+
+</body>
+</html>

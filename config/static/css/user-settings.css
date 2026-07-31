@@ -1,0 +1,160 @@
+/* -=-=- Main Page Setup -=-=- */
+
+body {
+    /* Was having issues with differnt fonts appearing */
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.settings-box {
+
+    width: 450px;
+    margin: 60px auto;
+    text-align: center;
+
+}
+
+.settings-box h1 {
+    margin-bottom: 30px;
+}
+
+
+
+/* -=-=- Profile Image  -=-=- */
+
+.profile-section {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 15px;
+    margin-bottom: 30px;
+
+}
+
+.profile-pic {
+
+    width: 140px;
+    height: 140px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border: 2px solid black;
+
+    display: block;
+
+}
+
+.profile-section input[type="file"] {
+
+    width: 200px;
+
+    padding: 8px;
+
+    border-radius: 15px;
+    border: 1px solid black;
+
+    cursor: pointer;
+
+}
+
+
+
+/* -=-=- User Settings Body -=-=- */
+
+.settings-body {
+
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+
+    margin-bottom: 20px;
+
+}
+
+.settings-body label {
+    margin-bottom: 5px;
+}
+
+.settings-body input {
+
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid black;
+
+}
+
+
+
+/* -=-=- Save and Cancel Buttons -=-=- */
+
+.button-row {
+
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+
+    margin-top: 30px;
+
+}
+
+.button-row button{
+
+    padding: 10px 25px;
+
+    border-radius: 15px;
+    border: 1px solid black;
+
+    background: white;
+
+    cursor: pointer;
+
+    text-decoration: none;
+    color: black;
+
+    font-size: 16px;
+
+}
+
+.button-row a {
+
+    padding: 10px 25px;
+
+    border-radius: 15px;
+    border: 1px solid black;
+
+    background: white;
+
+    cursor: pointer;
+
+    text-decoration: none;
+    color: black;
+
+    font-size: 16px;
+
+}
+
+.button-row button:hover{
+
+    background: #c5eec7;
+    transition: background 0.2s ease;
+
+}
+.button-row a:hover {
+
+    background: #f57a7a;
+    transition: background 0.2s ease;
+
+}
+
+.section-divider {
+
+    width: 100%;
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 25px auto;
+
+}

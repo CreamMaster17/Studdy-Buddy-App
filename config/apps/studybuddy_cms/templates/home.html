@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyBuddy!</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+
+    <nav class="top-nav">
+
+        <!-- Top right Profile Picture Image -->
+        <div class="profile-menu">
+
+            <!-- Thank you to Hartono Creative Studio on Unsplash for the image -->
+            <!-- Use exisitng pfp if not then default -->
+            <img
+                src= 
+                    "{% if request.user.profile.profile_picture %}
+                        {{ request.user.profile.profile_picture.url }}
+                    {% else %}
+                        {% static 'images/EmptyProfilePic.jpg' %}
+                    {% endif %}"
+
+                id="profile-pic"
+                class="profile-pic"
+                alt="Profile">
+
+            <!-- Drop Down Box for User Settings and Logout  -->
+            <!-- JS doesnt display this until pfp is clicked -->
+            <div id="profile-dropdown" class="dropdown-content">
+
+                <a href="{% url 'accounts:user-settings' %}">
+                    Settings
+                </a>
+
+                <form action="{% url 'accounts:logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                        Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <header>
+
+        <!-- Basic Titling w/ Image-->
+        <section id="title">
+            <a class="logo-link" href="{% url 'studybuddy_cms:main' %}">
+                <h1>
+                    <img src="{% static 'images/SB_logo.png' %}">
+                    StudyBuddy
+                </h1>
+            </a>    
+        </section>
+    
+        <!-- Basic Description -->
+        <div class="desc">
+            <p>
+                StudyBuddy is your perfect AI study tool assistant! It will take your notes and lectures and generate quizzes, flashcards, and summaries from it!
+            </p>
+        </div>
+    </header>
+
+
+    <!-- User Input Section -->
+    <section id="input">
+        <div class="input-box">
+
+            <!-- Top Splash Text -->
+            <label for="textbox">
+                Paste your notes or ask StudyBuddy anything:
+            </label>
+
+            <!-- Typing Box -->
+            <textarea id="textbox"
+                placeholder="Example: Summarize my biology lecture and create flashcards..."></textarea>
+
+
+            <!-- Choices to Use User Input -->
+            <div class="study-options">
+
+                <button class="mode active" data-action="summary">
+                    Summary
+                </button>
+
+                <button class="mode" data-action="flashcards">
+                    Flashcards
+                </button>
+
+                <button class="mode" data-action="quiz">
+                    Quiz
+                </button>
+
+            </div>
+
+
+            <!-- Upload Notes Instead -->
+            <div class="upload-area">
+
+                <button type="button" onclick="document.getElementById('file-uploader').click()">
+                    Upload Notes
+                </button>
+
+
+                <input type="file" id="file-uploader" hidden accept=".pdf">
+
+                <span>
+                    Only PDF files supported
+                </span>
+
+            </div>
+
+            <!-- Submit Button for User Input -->
+            <button id="submit-button" type="button"> 
+                Generate Study Material
+            </button>
+        </div>
+    </section>
+
+    <!-- AI Section Response -->
+    <section id="output">
+        <div class="ai-response">
+
+            <div class="response-header">
+                <!-- Splash Text -->
+                <h2>
+                    Your Study Material
+                </h2>
+
+                <!-- Go to my study content -->
+                <a href="{% url 'studybuddy_cms:my-study' %}" class="my-study-button">
+                    My Study
+                </a>
+            </div>
+
+            <!-- Actual AI Response -->
+            <div id="response-content">
+                <p>
+                    Your AI-generated notes will appear here.
+                </p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Adding client-side dynamic functionality to the page --> 
+    <script src="{% static 'js/home.js' %}" defer></script>
+
+</body>
+</html>
