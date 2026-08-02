@@ -381,5 +381,5 @@ class TestQuizAPIIntegration(TestCase):
         )
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data["score_percentage"], 100.0)
-        self.assertTrue(response.data["saved_to_history"]["success"])
+        self.assertTrue(response.data["save_to_history"]["success"])
         self.assertEqual(QuizResult.objects.filter(user=self.user).count(), 1)

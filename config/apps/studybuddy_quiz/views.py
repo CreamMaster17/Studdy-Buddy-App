@@ -143,7 +143,7 @@ def submit_and_save_quiz(request):
             status=status.HTTP_400_BAD_REQUEST,
         )
 
-    results = grade_quiz_submission(quiz.quiz_data, answers)
+    results = grade_quiz_submission(quiz, answers)
     if "error" in results:
         return Response(results, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
