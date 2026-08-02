@@ -59,14 +59,12 @@ class StudyToolsAPITest(APITestCase):
 
 
         response = self.client.post(
-            "/api/study-tools/summarize/",
+            "/api/study-tools/summary/",
             {
                 "text": "Plants use sunlight."
             },
             format="json"
         )
-
-        print(response.data)
 
 
         self.assertEqual(
@@ -135,7 +133,7 @@ class StudyToolsAPITest(APITestCase):
     def test_empty_text_returns_error(self):
 
         response = self.client.post(
-            "/api/study-tools/summarize/",
+            "/api/study-tools/summary/",
             {
                 "text": ""
             },
@@ -279,10 +277,6 @@ class GeminiServiceTests(TestCase):
         )
 
 
-
-    @patch(
-        "apps.studybuddy_cms.services.gemini_service.get_client"
-    )
     
     @patch(
         "apps.studybuddy_cms.services.gemini_service.get_client"

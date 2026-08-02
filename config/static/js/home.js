@@ -1,4 +1,4 @@
-console.log("reached print")
+console.log("Page Loaded")
 
 // Profile Picture and Dropdown menu
 const profilePic = document.getElementById("profile-pic");
@@ -62,7 +62,7 @@ submitButton.addEventListener("click", async function () {
     // Special case for quiz
     if (action === "quiz") {
 
-        console.log("shouldnt see me")
+        console.log(`Selected Special Case: ${action}`)
         
         endpoint = "/api/quiz/generate";
         bigBody = {
@@ -75,7 +75,7 @@ submitButton.addEventListener("click", async function () {
 
     try {
 
-        console.log("reached 2")
+        console.log(`Calling API Endpoint: ${endpoint}`)
         
         const response = await fetch (
             endpoint,
@@ -91,7 +91,7 @@ submitButton.addEventListener("click", async function () {
             
         );
 
-        console.log("reached 3")
+        console.log("API Called; Getting Data")
 
         const data = await response.json();
 
@@ -102,24 +102,24 @@ submitButton.addEventListener("click", async function () {
 
         if (action === "summary") {
 
-            console.log("reached 4")
-            console.log(data);
+            console.log("Reached Summary")
 
             displaySummary(data);
 
-            console.log("reached 7")
+            console.log("Generation Finished")
 
         }
 
         else if (action === "flashcards") {
 
-            console.log("reached flashcards?")
+            console.log("Generation Finished")
 
             displayFlashcards(data.flashcards);
 
         }
         else if (action === "quiz") {
 
+            console.log("Redirecting to quiz")
             window.location.href = `/quiz/?quiz_id=${data.quiz_id}`;
         }
 
@@ -218,7 +218,7 @@ function displayFlashcards(flashcards) {
 // Display Summary
 function displaySummary(summary) {
 
-    console.log("reached 5")
+    console.log("Displaying Summary")
     output.innerHTML = "";
 
     const title = document.createElement("h2");
@@ -262,6 +262,6 @@ function displaySummary(summary) {
 
     output.appendChild(takeawayList);
 
-    console.log("reached 6")
+    console.log("Finished displaying summary")
 
 }
